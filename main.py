@@ -29,15 +29,19 @@ class Main:
     def click(self):
         global clicks
         clicks += cpc
-        self.amount.config(text=f"{clicks} clicks")
+        self.updateclicks()
 
     def openshop(self):
-        Shop()
         Shop(self)
 
+    def updateclicks(self):
+        global clicks
+        self.amount.config(text=f"{clicks} clicks")
 
 class Shop:
-    def __init__(self):
+    def __init__(self, main_instance):
+        self.main_instance = main_instance
+
         self.shopwin = Toplevel()
         self.shopwin.title("shop")
         self.shopwin.geometry("300x200")
@@ -50,6 +54,7 @@ class Shop:
         global cpc
         if clicks >= 15:
             clicks -= 15
+            self.main_instance.updateclicks()
             cpc += 1
 
 if __name__ == "__main__":
