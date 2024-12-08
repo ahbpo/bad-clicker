@@ -7,6 +7,7 @@ from tkinter import ttk
 
 #vars
 clicks = 0
+cpc = 1
 
 class Main:
     def __init__(self):
@@ -24,7 +25,7 @@ class Main:
 
     def click(self):
         global clicks
-        clicks += 1
+        clicks += cpc
         self.amount.config(text=f"{clicks} clicks")
 
 if __name__ == "__main__":
