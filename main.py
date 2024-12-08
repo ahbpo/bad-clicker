@@ -33,12 +33,24 @@ class Main:
 
     def openshop(self):
         Shop()
+        Shop(self)
+
 
 class Shop:
     def __init__(self):
         self.shopwin = Toplevel()
         self.shopwin.title("shop")
         self.shopwin.geometry("300x200")
+
+        self.addclick = ttk.Button(self.shopwin, text="buy 1 click\n(15 clicks)", command=self.buyclick)
+        self.addclick.place(x=150-30)
+
+    def buyclick(self):
+        global clicks
+        global cpc
+        if clicks >= 15:
+            clicks -= 15
+            cpc += 1
 
 if __name__ == "__main__":
     Main()
