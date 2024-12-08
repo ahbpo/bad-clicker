@@ -9,8 +9,41 @@ from tkinter import ttk
 clicks = 0
 cpc = 1
 
-class Main:
+class Menu:
     def __init__(self):
+        self.root = Tk()
+        self.root.title("menu")
+        self.root.geometry("300x200")
+
+        self.button = ttk.Button(self.root, text="play da game", command=self.start)
+        self.button.pack(pady=20)
+
+        self.pressed = BooleanVar()
+        self.check = ttk.Checkbutton(self.root, text="enable rawdog", variable=self.pressed, command=self.checkpressed)
+        self.check.pack(pady=20)
+
+        self.button2 = ttk.Button(self.root, text="rawdog it", state=DISABLED, command=self.startsimple)
+        self.button2.pack(pady=10)
+
+        self.root.mainloop()
+
+    def start(self):
+        self.root.destroy()
+        Main(mode="normal")
+
+    def checkpressed(self):
+        if self.pressed.get():
+            self.button2.config(state=NORMAL)
+        else:
+            self.button2.config(state=DISABLED)
+
+    def startsimple(self):
+        self.root.destroy()
+        Main(mode="simple")
+
+class Main:
+    def __init__(self, mode):
+        self.mode = mode
         self.root = Tk()
         self.root.title("clicker")
         self.root.geometry("350x200")
@@ -20,9 +53,9 @@ class Main:
 
         self.clicker = ttk.Button(self.root, text="small number\nget bigger", command=self.click)
         self.clicker.place(x=350/2.2, y=25)
-
-        self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
-        self.shopbutton.place(x=0, y=0)
+        if self.mode == "normal":
+            self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
+            self.shopbutton.place(x=0, y=0)
 
         self.root.mainloop()
 
@@ -58,4 +91,4 @@ class Shop:
             cpc += 1
 
 if __name__ == "__main__":
-    Main()
+    Menu()
