@@ -21,12 +21,23 @@ class Main:
         self.clicker = ttk.Button(self.root, text="small number\nget bigger", command=self.click)
         self.clicker.place(x=350/2.2, y=25)
 
+        self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
+        self.shopbutton.place(x=0, y=0)
+
         self.root.mainloop()
 
     def click(self):
         global clicks
         clicks += cpc
         self.amount.config(text=f"{clicks} clicks")
+
+    def openshop(self):
+        Shop()
+
+class Shop:
+    def __init__(self):
+        self.shopwin = Toplevel()
+        self.shopwin.title("shop")
 
 if __name__ == "__main__":
     Main()
