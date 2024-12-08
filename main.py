@@ -57,6 +57,8 @@ class Main:
             self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
             self.shopbutton.place(x=0, y=0)
 
+        self.cpclabel = ttk.Label(self.root, text="1 clicks per click")
+        self.cpclabel.place(x=350/2.2, y=75)
         self.root.mainloop()
 
     def click(self):
@@ -70,6 +72,11 @@ class Main:
     def updateclicks(self):
         global clicks
         self.amount.config(text=f"{clicks} clicks")
+
+    def updatecpc(self):
+        global cpc
+        self.cpclabel.config(text=f"{cpc} clicks per click")
+
 
 class Shop:
     def __init__(self, main_instance):
@@ -89,6 +96,7 @@ class Shop:
             clicks -= 15
             self.main_instance.updateclicks()
             cpc += 1
+            self.main_instance.updatecpc()
 
 if __name__ == "__main__":
     Menu()
