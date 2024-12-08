@@ -38,6 +38,7 @@ class Shop:
     def __init__(self):
         self.shopwin = Toplevel()
         self.shopwin.title("shop")
+        self.shopwin.geometry("300x200")
 
 if __name__ == "__main__":
     Main()
