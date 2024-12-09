@@ -16,7 +16,7 @@ class Menu:
         self.root.title("menu")
         self.root.geometry("300x350")
 
-        self.button = ttk.Button(self.root, text="play da game", command=self.start)
+        self.button = ttk.Button(self.root, text="play", command=self.start)
         self.button.pack(pady=20)
 
         self.pressed = BooleanVar()
@@ -127,7 +127,7 @@ class Main:
         self.updateclicks()
         self.updatelabels()
 
-
+#TODO: make upgrade prices incremental not static
 class Shop:
     def __init__(self, main_instance):
         self.main_instance = main_instance
