@@ -14,7 +14,7 @@ class Menu:
     def __init__(self):
         self.root = Tk()
         self.root.title("menu")
-        self.root.geometry("300x250")
+        self.root.geometry("300x350")
 
         self.button = ttk.Button(self.root, text="play da game", command=self.start)
         self.button.pack(pady=20)
@@ -29,6 +29,9 @@ class Menu:
         self.devon = BooleanVar()
         self.devmode = ttk.Checkbutton(self.root, text="enable dev mode", variable=self.devon)
         self.devmode.pack(pady=20)
+
+        self.quit = ttk.Button(self.root, text="quit", command=self.exit)
+        self.quit.pack(pady=20)
 
         self.root.mainloop()
 
@@ -48,6 +51,9 @@ class Menu:
         self.root.destroy()
         Main(mode="simple", dev=dev)
 
+    def exit(self):
+        Quit()
+
 class Main:
     def __init__(self, mode, dev):
         self.dev = dev
@@ -63,7 +69,7 @@ class Main:
         self.clicker.place(x=350/2.2, y=25)
         if self.mode == "normal":
             self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
-            self.shopbutton.place(x=0, y=0)
+            self.shopbutton.place(x=5, y=0)
 
         self.cpclabel = ttk.Label(self.root, text="1 clicks per click\nx1 modifier")
         self.cpclabel.place(x=350/2.2, y=75)
@@ -75,6 +81,9 @@ class Main:
 
             self.conf = ttk.Button(self.root, text="confirm", command=self.makeclicks)
             self.conf.place(x=5, y=100)
+
+        self.returnmenu = ttk.Button(self.root, text="quit", command=self.exit)
+        self.returnmenu.place(x=5, y=30)
 
         self.root.mainloop()
 
@@ -97,6 +106,10 @@ class Main:
         if self.give.isnumeric():
             clicks = int(self.give)
             self.updateclicks()
+
+    def exit(self):
+        self.root.destroy()
+        Menu()
 
     def openshop(self):
         Shop(self)
@@ -160,6 +173,29 @@ class Info:
 
         self.info = ttk.Label(self.infowin, text="In the shop, you spend your hard-earned clicks, and gain clicks per clicks (cpc).\nCpc increases the amounts of clicks (currency) per every click (physical).")
         self.info.pack()
+
+class Quit:
+    def __init__(self):
+        self.exitmenu = Toplevel()
+        self.exitmenu.title("exit")
+        self.exitmenu.geometry("200x150")
+
+        self.sure = ttk.Label(self.exitmenu, text="Are you sure?\nProgress is not saved!")
+        self.sure.grid(row=1, column=0)
+
+        self.accept = ttk.Button(self.exitmenu, text="yes", command=self.yes)
+        self.accept.grid(row=0, column=1)
+
+        self.refuse = ttk.Button(self.exitmenu, text="no", command=self.no)
+        self.refuse.grid(row=2, column=1)
+
+        self.exitmenu.mainloop()
+
+    def yes(self):
+        exit()
+
+    def no(self):
+        self.exitmenu.destroy()
 
 if __name__ == "__main__":
     Menu()
