@@ -8,6 +8,7 @@ from tkinter import ttk
 #vars
 clicks = 0
 cpc = 1
+modifier = 1
 
 class Menu:
     def __init__(self):
@@ -57,13 +58,21 @@ class Main:
             self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
             self.shopbutton.place(x=0, y=0)
 
-        self.cpclabel = ttk.Label(self.root, text="1 clicks per click")
+        self.cpclabel = ttk.Label(self.root, text="1 clicks per click\nx1 modifier")
         self.cpclabel.place(x=350/2.2, y=75)
         self.root.mainloop()
 
     def click(self):
         global clicks
-        clicks += cpc
+        global modifier
+        global cpc
+
+        if cpc < 1:
+            cpc = 1
+        elif modifier < 1:
+            modifier = 1
+
+        clicks += cpc * modifier
         self.updateclicks()
 
     def openshop(self):
@@ -73,9 +82,14 @@ class Main:
         global clicks
         self.amount.config(text=f"{clicks} clicks")
 
-    def updatecpc(self):
+    def updatelabels(self):
         global cpc
-        self.cpclabel.config(text=f"{cpc} clicks per click")
+        global modifier
+        self.cpclabel.config(text=f"{cpc} clicks per click\nx{modifier} modifier")
+
+    def updateall(self):
+        self.updateclicks()
+        self.updatelabels()
 
 
 class Shop:
@@ -92,14 +106,24 @@ class Shop:
         self.addclick = ttk.Button(self.shopwin, text="buy 1 cpc\n(15 clicks)", command=self.buyclick)
         self.addclick.place(x=150-30)
 
+        self.multiclick = ttk.Button(self.shopwin, text="buy 1 cpc modifier\n(1500 clicks)", command=self.buymultclick)
+        self.multiclick.place(x=150-30, y=45)
+
     def buyclick(self):
         global clicks
         global cpc
         if clicks >= 15:
             clicks -= 15
-            self.main_instance.updateclicks()
             cpc += 1
-            self.main_instance.updatecpc()
+            self.main_instance.updateall()
+
+    def buymultclick(self):
+        global modifier
+        global clicks
+        if clicks >= 1500:
+            clicks -= 1500
+            modifier += 1
+            self.main_instance.updateall()
 
     def openinfo(self):
         Info(self)
