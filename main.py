@@ -86,7 +86,10 @@ class Shop:
         self.shopwin.title("shop")
         self.shopwin.geometry("300x200")
 
-        self.addclick = ttk.Button(self.shopwin, text="buy 1 click\n(15 clicks)", command=self.buyclick)
+        self.info = ttk.Button(self.shopwin, text="info", command=self.openinfo)
+        self.info.place(x=0, y=0)
+
+        self.addclick = ttk.Button(self.shopwin, text="buy 1 cpc\n(15 clicks)", command=self.buyclick)
         self.addclick.place(x=150-30)
 
     def buyclick(self):
@@ -97,6 +100,19 @@ class Shop:
             self.main_instance.updateclicks()
             cpc += 1
             self.main_instance.updatecpc()
+
+    def openinfo(self):
+        Info(self)
+
+class Info:
+    def __init__(self, shop_instance):
+        self.shop_instance = shop_instance
+
+        self.infowin = Toplevel(master=self.shop_instance.shopwin)
+        self.infowin.title("info")
+
+        self.info = ttk.Label(self.infowin, text="In the shop, you spend your hard-earned clicks, and gain clicks per clicks (cpc).\nCpc increases the amounts of clicks (currency) per every click (physical).")
+        self.info.pack()
 
 if __name__ == "__main__":
     Menu()
