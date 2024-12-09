@@ -14,7 +14,7 @@ class Menu:
     def __init__(self):
         self.root = Tk()
         self.root.title("menu")
-        self.root.geometry("300x200")
+        self.root.geometry("300x250")
 
         self.button = ttk.Button(self.root, text="play da game", command=self.start)
         self.button.pack(pady=20)
@@ -26,11 +26,16 @@ class Menu:
         self.button2 = ttk.Button(self.root, text="hard mode\n(no upgrades)", state=DISABLED, command=self.startsimple)
         self.button2.pack(pady=10)
 
+        self.devon = BooleanVar()
+        self.devmode = ttk.Checkbutton(self.root, text="enable dev mode", variable=self.devon)
+        self.devmode.pack(pady=20)
+
         self.root.mainloop()
 
     def start(self):
+        dev = self.devon.get()
         self.root.destroy()
-        Main(mode="normal")
+        Main(mode="normal", dev=dev)
 
     def checkpressed(self):
         if self.pressed.get():
@@ -39,11 +44,13 @@ class Menu:
             self.button2.config(state=DISABLED)
 
     def startsimple(self):
+        dev = self.devon.get()
         self.root.destroy()
-        Main(mode="simple")
+        Main(mode="simple", dev=dev)
 
 class Main:
-    def __init__(self, mode):
+    def __init__(self, mode, dev):
+        self.dev = dev
         self.mode = mode
         self.root = Tk()
         self.root.title("clicker")
@@ -60,6 +67,15 @@ class Main:
 
         self.cpclabel = ttk.Label(self.root, text="1 clicks per click\nx1 modifier")
         self.cpclabel.place(x=350/2.2, y=75)
+
+        if self.dev:
+            self.am = ttk.Entry(self.root)
+            self.am.place(x=5, y=75)
+            self.give = self.am.get()
+
+            self.conf = ttk.Button(self.root, text="confirm", command=self.makeclicks)
+            self.conf.place(x=5, y=100)
+
         self.root.mainloop()
 
     def click(self):
@@ -74,6 +90,13 @@ class Main:
 
         clicks += cpc * modifier
         self.updateclicks()
+
+    def makeclicks(self):
+        global clicks
+        self.give = self.am.get()
+        if self.give.isnumeric():
+            clicks = int(self.give)
+            self.updateclicks()
 
     def openshop(self):
         Shop(self)
