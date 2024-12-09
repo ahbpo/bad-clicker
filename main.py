@@ -19,10 +19,10 @@ class Menu:
         self.button.pack(pady=20)
 
         self.pressed = BooleanVar()
-        self.check = ttk.Checkbutton(self.root, text="enable rawdog", variable=self.pressed, command=self.checkpressed)
+        self.check = ttk.Checkbutton(self.root, text="enable hard mode", variable=self.pressed, command=self.checkpressed)
         self.check.pack(pady=20)
 
-        self.button2 = ttk.Button(self.root, text="rawdog it", state=DISABLED, command=self.startsimple)
+        self.button2 = ttk.Button(self.root, text="hard mode\n(no upgrades)", state=DISABLED, command=self.startsimple)
         self.button2.pack(pady=10)
 
         self.root.mainloop()
