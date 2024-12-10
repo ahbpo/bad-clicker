@@ -127,10 +127,12 @@ class Main:
         self.updateclicks()
         self.updatelabels()
 
-#TODO: make upgrade prices incremental not static
 class Shop:
     def __init__(self, main_instance):
         self.main_instance = main_instance
+        self.cpcprice = 15
+        self.modprice = 1500
+        self.pricemult = {"cpc":1.2, "mod":1.2}
 
         self.shopwin = Toplevel()
         self.shopwin.title("shop")
@@ -139,30 +141,42 @@ class Shop:
         self.info = ttk.Button(self.shopwin, text="info", command=self.openinfo)
         self.info.place(x=0, y=0)
 
-        self.addclick = ttk.Button(self.shopwin, text="buy 1 cpc\n(15 clicks)", command=self.buyclick)
+        self.addclick = ttk.Button(self.shopwin, text="buy 1 cpc\n(18 clicks)", command=self.buyclick)
         self.addclick.place(x=150-30)
 
-        self.multiclick = ttk.Button(self.shopwin, text="buy 1 cpc modifier\n(1500 clicks)", command=self.buymultclick)
+        self.multiclick = ttk.Button(self.shopwin, text=f"buy 1 cpc modifier\n({self.modprice} clicks)", command=self.buymultclick)
         self.multiclick.place(x=150-30, y=45)
+
+        self.updateprices()
 
     def buyclick(self):
         global clicks
         global cpc
-        if clicks >= 15:
-            clicks -= 15
+        new_price = round(self.cpcprice * self.pricemult["cpc"])
+        if clicks >= self.cpcprice:
+            clicks -= self.cpcprice
             cpc += 1
+            self.cpcprice = new_price
             self.main_instance.updateall()
+            self.updateprices()
 
     def buymultclick(self):
         global modifier
         global clicks
-        if clicks >= 1500:
-            clicks -= 1500
+        new_price = round(self.modprice * self.pricemult["mod"])
+        if clicks >= self.modprice:
+            clicks -= self.modprice
             modifier += 1
+            self.modprice = new_price
             self.main_instance.updateall()
+            self.updateprices()
 
     def openinfo(self):
         Info(self)
+
+    def updateprices(self):
+        self.addclick.config(text=f"buy 1 cpc\n({self.cpcprice} clicks)")
+        self.multiclick.config(text=f"buy 1 cpc modifier\n({self.modprice} clicks)")
 
 class Info:
     def __init__(self, shop_instance):
