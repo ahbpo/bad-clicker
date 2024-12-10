@@ -192,16 +192,16 @@ class Quit:
     def __init__(self):
         self.exitmenu = Toplevel()
         self.exitmenu.title("exit")
-        self.exitmenu.geometry("200x150")
+        self.exitmenu.geometry("225x80")
 
         self.sure = ttk.Label(self.exitmenu, text="Are you sure?\nProgress is not saved!")
-        self.sure.grid(row=1, column=0)
+        self.sure.place(x=75, y=5)
 
         self.accept = ttk.Button(self.exitmenu, text="yes", command=self.yes)
-        self.accept.grid(row=0, column=1)
+        self.accept.place(x=25, y=50)
 
         self.refuse = ttk.Button(self.exitmenu, text="no", command=self.no)
-        self.refuse.grid(row=2, column=1)
+        self.refuse.place(x=125, y=50)
 
         self.exitmenu.mainloop()
 
