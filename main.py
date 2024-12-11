@@ -197,19 +197,13 @@ class Quit:
         self.sure = ttk.Label(self.exitmenu, text="Are you sure?\nProgress is not saved!")
         self.sure.place(x=75, y=5)
 
-        self.accept = ttk.Button(self.exitmenu, text="yes", command=self.yes)
+        self.accept = ttk.Button(self.exitmenu, text="yes", command=exit)
         self.accept.place(x=25, y=50)
 
-        self.refuse = ttk.Button(self.exitmenu, text="no", command=self.no)
+        self.refuse = ttk.Button(self.exitmenu, text="no", command=self.exitmenu.destroy)
         self.refuse.place(x=125, y=50)
 
         self.exitmenu.mainloop()
-
-    def yes(self):
-        exit()
-
-    def no(self):
-        self.exitmenu.destroy()
 
 if __name__ == "__main__":
     Menu()
