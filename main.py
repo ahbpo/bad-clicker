@@ -30,7 +30,7 @@ class Menu:
         self.devmode = ttk.Checkbutton(self.root, text="enable dev mode", variable=self.devon)
         self.devmode.pack(pady=20)
 
-        self.quit = ttk.Button(self.root, text="quit", command=self.exit)
+        self.quit = ttk.Button(self.root, text="quit", command=Quit)
         self.quit.pack(pady=20)
 
         self.root.mainloop()
@@ -51,8 +51,6 @@ class Menu:
         self.root.destroy()
         Main(mode="simple", dev=dev)
 
-    def exit(self):
-        Quit()
 
 class Main:
     def __init__(self, mode, dev):
