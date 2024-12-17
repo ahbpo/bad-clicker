@@ -60,27 +60,30 @@ class Main:
         self.root.title("clicker")
         self.root.geometry("350x200")
 
-        self.amount = ttk.Label(self.root, text=f"{clicks} clicks", font=26)
+        self.clickframe = ttk.Frame(self.root)
+        self.clickframe.pack(fill='both', expand=True)
+
+        self.amount = ttk.Label(self.clickframe, text=f"{clicks} clicks", font=26)
         self.amount.place(x=350/2, y=0)
 
-        self.clicker = ttk.Button(self.root, text="small number\nget bigger", command=self.click)
+        self.clicker = ttk.Button(self.clickframe, text="small number\nget bigger", command=self.click)
         self.clicker.place(x=350/2.2, y=25)
         if self.mode == "normal":
-            self.shopbutton = ttk.Button(self.root, text="shop", command=self.openshop)
+            self.shopbutton = ttk.Button(self.clickframe, text="shop", command=self.openshop)
             self.shopbutton.place(x=5, y=0)
 
-        self.cpclabel = ttk.Label(self.root, text="1 clicks per click\nx1 modifier")
+        self.cpclabel = ttk.Label(self.clickframe, text="1 clicks per click\nx1 modifier")
         self.cpclabel.place(x=350/2.2, y=75)
 
         if self.dev:
-            self.am = ttk.Entry(self.root)
+            self.am = ttk.Entry(self.clickframe)
             self.am.place(x=5, y=75)
             self.give = self.am.get()
 
-            self.conf = ttk.Button(self.root, text="confirm", command=self.makeclicks)
+            self.conf = ttk.Button(self.clickframe, text="confirm", command=self.makeclicks)
             self.conf.place(x=5, y=100)
 
-        self.returnmenu = ttk.Button(self.root, text="quit", command=self.exit)
+        self.returnmenu = ttk.Button(self.clickframe, text="quit", command=self.exit)
         self.returnmenu.place(x=5, y=30)
 
         self.root.mainloop()
@@ -136,13 +139,16 @@ class Shop:
         self.shopwin.title("shop")
         self.shopwin.geometry("300x200")
 
-        self.info = ttk.Button(self.shopwin, text="info", command=self.openinfo)
+        self.shopframe = ttk.Frame(self.shopwin)
+        self.shopframe.pack(fill="both", expand=True)
+
+        self.info = ttk.Button(self.shopframe, text="info", command=self.openinfo)
         self.info.place(x=0, y=0)
 
-        self.addclick = ttk.Button(self.shopwin, text="buy 1 cpc\n(18 clicks)", command=self.buyclick)
+        self.addclick = ttk.Button(self.shopframe, text="buy 1 cpc\n(18 clicks)", command=self.buyclick)
         self.addclick.place(x=150-30)
 
-        self.multiclick = ttk.Button(self.shopwin, text=f"buy 1 cpc modifier\n({self.modprice} clicks)", command=self.buymultclick)
+        self.multiclick = ttk.Button(self.shopframe, text=f"buy 1 cpc modifier\n({self.modprice} clicks)", command=self.buymultclick)
         self.multiclick.place(x=150-30, y=45)
 
         self.updateprices()
