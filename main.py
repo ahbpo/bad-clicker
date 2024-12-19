@@ -109,7 +109,9 @@ class Main:
             self.updateclicks()
 
     def exit(self):
+        global clicks
         self.root.destroy()
+        clicks = 0
         Menu()
 
     def openshop(self):
