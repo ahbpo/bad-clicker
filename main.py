@@ -15,6 +15,7 @@ class Menu:
         self.root = Tk()
         self.root.title("menu")
         self.root.geometry("300x350")
+        self.root.iconbitmap("cursor.ico")
 
         self.button = ttk.Button(self.root, text="play", command=self.start)
         self.button.pack(pady=20)
@@ -59,6 +60,7 @@ class Main:
         self.root = Tk()
         self.root.title("clicker")
         self.root.geometry("350x200")
+        self.root.iconbitmap("cursor.ico")
 
         self.clickframe = ttk.Frame(self.root)
         self.clickframe.pack(fill='both', expand=True)
